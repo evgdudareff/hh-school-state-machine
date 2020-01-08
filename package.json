@@ -1,0 +1,24 @@
+{
+  "name": "hh-school-html",
+  "version": "1.0.0",
+  "homepage": "http://leonidfeskov.github.io/hh-school-html/",
+  "main": "index.js",
+  "author": "Leonid Feskov",
+  "license": "MIT",
+  "scripts": {
+    "dev": "parcel index.html",
+    "dev2": "parcel popup.html",
+    "build": "parcel build index.html --public-url .",
+    "deploy": "yarn build && gh-pages -d dist"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-transform-runtime": "^7.7.6",
+    "cssnano": "^4.1.10",
+    "gh-pages": "^2.1.1",
+    "less": "^3.10.3"
+  },
+  "dependencies": {
+    "@babel/runtime-corejs2": "^7.7.7"
+  }
+}
