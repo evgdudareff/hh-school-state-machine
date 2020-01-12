@@ -8,51 +8,48 @@ const machine = data => {
 //Позволяет сохранять и вынимать последний созданный контекст инстанса машины состояний
 let ctx = [];
 
-function Machine(data) {
-  this.id = data.id;
-  this.state = data.initialState;
-  this.context = data.context;
-  this.states = data.states;
-  this.actionsDescription = data.actions;
+class Machine {
+  constructor(data) {
+    this.id = data.id;
+    this.state = data.initialState;
+    this.context = data.context;
+    this.states = data.states;
+    this.actionsDescription = data.actions;
+  }
 
   //Метод: запуск action/actions
-  this.doAction = function(action, event) {
-    const actionType = action.constructor;
-
+  doAction(action, event) {
     //В зависиомсти от типа action - провести запуск
-    if (actionType === String) {
+    if (typeof action === "string") {
       this.actionsDescription[action](event);
-    } else if (actionType === Function) {
+    } else if (typeof action === "function") {
       action(event);
-    } else if (actionType === Array) {
+    } else if (Array.isArray(action)) {
       action.forEach((action, event) => {
         this.doAction(action, event);
       });
     } else {
-      console.log("Action должен быть типа String, Function или Array!");
-      return;
+      throw new Error("Action должен быть типа String, Function или Array!");
     }
-  };
+  }
 
   //Метод запуска service (всегда функция)
-  this.doService = function(service, event) {
+  doService(service, event) {
     //Проверим, что сервис задан функцией
-    if (service.constructor !== Function) {
-      console.log("Service должен быть функцией!");
-      return;
+    if (typeof service !== "function") {
+      throw new Error("Service должен быть функцией!");
     }
 
     service(event);
-  };
+  }
 
   //Метод: произвести переход
-  this.transition = function(transition, data) {
+  transition(transition, data) {
     //1. Проверить, есть ли требуемая транзакция для текущего состояния
     if (!transition in this.states[this.state].on) {
-      console.log(
+      throw new Error(
         `Для текущего состояние транзация ${transition} не предусмотрена`
       );
-      return;
     }
 
     //2. Сохраним контекст текущей машины состояний (доступен из замыкания)
@@ -69,7 +66,7 @@ function Machine(data) {
       const [state, setState] = useState();
       setState(target);
     }
-  };
+  }
 }
 
 //Функция: возвращает текущий контекст и позволяет его изменить

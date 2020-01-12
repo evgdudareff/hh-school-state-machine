@@ -37,7 +37,7 @@ const vacancyMachine = machine({
               .fetch({
                 method: "post",
                 data: {
-                  /* resume: event.resume, vacancyId: context.id */
+                  // resume: event.resume, vacancyId: context.id */
                 }
               })
               .then(() => {
