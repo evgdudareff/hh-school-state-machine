@@ -26,7 +26,7 @@ const vacancyMachine = machine({
         // Транзакция
         RESPOND: {
           // упрощенный сервис, вызываем при транзакции
-          /* service: event => {
+          service: event => {
             // Позволяет получить текущий контекст и изменить его
             const [context, setContext] = useContext();
 
@@ -36,7 +36,9 @@ const vacancyMachine = machine({
             window
               .fetch({
                 method: "post",
-                data: { resume: event.resume, vacancyId: context.id }
+                data: {
+                  // resume: event.resume, vacancyId: context.id */
+                }
               })
               .then(() => {
                 // меняем состояние
@@ -44,9 +46,9 @@ const vacancyMachine = machine({
                 // Мержим контекст
                 setContext({ completed: true }); // {id: 123, comleted: true}
               });
-          } */
+          }
           // Если не задан сервис, то просто переводим в заданный target, иначе выполняем сервис.
-          target: "responded"
+          //target: "responded"
         }
       }
     }
